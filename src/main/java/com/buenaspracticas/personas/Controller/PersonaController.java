@@ -20,7 +20,11 @@ public class PersonaController {
 
     @PostMapping
     public ResponseEntity<String> postPersona(@Valid @RequestBody Persona persona) {
-        Persona p = personaService.create(persona);
-        return ResponseEntity.ok("Persona agregada correctamente");
+        try {
+            Persona p = personaService.create(persona);
+            return ResponseEntity.ok("Persona agregada correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Datos incompletos" + e.getMessage());
+        }
     }
 }

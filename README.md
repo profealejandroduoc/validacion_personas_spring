@@ -57,3 +57,70 @@ public ResponseEntity<String> postPersona(@Valid @RequestBody Persona persona){
     return ResponseEntity.ok("Persona agregada correctamente");
 }
 ```
+
+En este punto podemos usar postman e intentar un post:
+
+```json
+{
+    "nombre":"Wacoldo",
+    "apellido":"Soto",
+    "edad":20
+}
+```
+
+Debería devolver que se agrego correctamente
+
+Ahora podemos intentar el error con datos vacíos, lo que debería devolver bad Request
+
+```json
+{
+    "nombre":"Diogenes",
+    "apellido":"",
+    "edad":40
+}
+```
+
+## Capturando el error
+
+Podemos manejar el error de varias formas, por ejemplo con try catch pero no es recomandado si uso @valid entonces crearemos nuestro manejo de errores personalizado
+
+Para ello crearemos un nuevo package(carpeta) exception y crearemos una clase de java llamada *GlobalExceptionHandler.java* como se conoce de forma standar
+
+```java
+package com.buenaspracticas.personas.exception;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> manejoErroresValidacion(MethodArgumentNotValidException ex) {
+        @SuppressWarnings("unused")
+        Map<String, String> errores = new HashMap<>();
+
+        /*
+         * 
+         * for (var error : ex.getBindingResult().getFieldErrors()) {
+         * errores.put(error.getField(), error.getDefaultMessage());
+         * }
+         */
+
+        // Lo mismo usando función de flecha
+        ex.getBindingResult().getFieldErrors().forEach(error -> {
+            errores.put(error.getField(), error.getDefaultMessage());
+        });
+
+        return errores;
+
+    }
+
+}
+```
