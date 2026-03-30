@@ -16,4 +16,8 @@ public class PersonaRepository {
         return persona;
     }
 
+    public List<Persona> leerTodos() {
+        return personas;
+    }
+
 }

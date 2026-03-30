@@ -124,3 +124,46 @@ public class GlobalExceptionHandler {
 
 }
 ```
+
+Ahora crea un metodo Get para traer los datos
+
+## Un toque más profesional
+
+Agreguemos lo siguiente al modelo
+
+```java
+
+    private static final AtomicInteger contador = new AtomicInteger(1);
+
+    private int id;
+```
+
+y un constructor
+
+```java
+    public Persona(String nombre, String apellido, int edad) {
+        this.id = contador.getAndIncrement();
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+    }
+```
+
+esto nos permitira guardar de forma autonumérica en nuestra colección de manera que podemos tener un identificador válido
+
+también podemos cambiar el getmapping para que nos de un error al no encontrar recursos
+
+```java
+@GetMapping
+    public ResponseEntity<?> getPersonas() {
+        List<Persona> lista = personaService.readAll();
+
+        if (lista.isEmpty()) {
+            return ResponseEntity
+                    .status(404)
+                    .body("Recursos no encontrados");
+        }
+
+        return ResponseEntity.ok(lista);
+    }
+```

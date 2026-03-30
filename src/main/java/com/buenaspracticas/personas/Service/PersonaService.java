@@ -1,5 +1,7 @@
 package com.buenaspracticas.personas.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +15,9 @@ public class PersonaService {
 
     public Persona create(Persona persona) {
         return personaRepository.agregar(persona);
+    }
+
+    public List<Persona> readAll() {
+        return personaRepository.leerTodos();
     }
 }
