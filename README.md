@@ -31,3 +31,29 @@ public class Persona {
 
 }
 ```
+
+## Agregar las capas repository, service, y controller
+
+Para el ejemplo pasaremos directamente por las capas hasta el controlador
+
+```java
+package com.buenaspracticas.personas.Controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("api/v1/personas")
+public class PersonaController {
+
+}
+
+```
+
+agregar el metodo POST para persona, en el métodos se debe agregar la notación *@Valid* para que se aplique la validación correctamente. Además utilizaremos los métodos *ResponseEntity* que servirán para personalizar de forma más profesional nuestros mensajes
+
+```java
+public ResponseEntity<String> postPersona(@Valid @RequestBody Persona persona){
+    return ResponseEntity.ok("Persona agregada correctamente");
+}
+```
