@@ -2,6 +2,9 @@
 
 **Fullstack I**
 
+Para el desarrollo de esta aplicación usaremos la librería Jakarta Bean Validation
+[Documentación oficial](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/beanvalidation/bean-validation/bean-validation.html)
+
 ## Agregar dependencia al XML
 
 Buscar el archivo *pom.xml* y agregar la dependecia dentro del nodo
