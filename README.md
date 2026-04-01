@@ -4,6 +4,12 @@
 
 ## Agregar dependencia al XML
 
+Buscar el archivo *pom.xml* y agregar la dependecia dentro del nodo
+
+```xml
+ <dependencies>
+ ```
+
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -11,9 +17,9 @@
 </dependency>
 ```
 
-## Crear un medelo
+## Crear un modelo
 
-En este caso creamos el modelo persona con id, nombre, apellido y edad y sobre los atributos agregaremos las anotaciones que sean necesarias para validar nuestra clase
+En este caso creamos el modelo persona con nombre, apellido y edad y sobre los atributos agregaremos las anotaciones que sean necesarias para validar nuestra clase
 
 ```java
 public class Persona {
@@ -54,6 +60,7 @@ agregar el metodo POST para persona, en el métodos se debe agregar la notación
 
 ```java
 public ResponseEntity<String> postPersona(@Valid @RequestBody Persona persona){
+    personaService.create(persona);
     return ResponseEntity.ok("Persona agregada correctamente");
 }
 ```
